@@ -19,6 +19,7 @@ class MainViewPresenter: ObservableObject, PlayerDelegate {
     @Published var sliderValue: Float = 0.0
     @Published var playButtonText: String = "Pause"
     var videoSize: CGSize?
+    @Published var playerRenderViewHeight: CGFloat = 100
 
     init() {
         avPlayerLayer = AVPlayerLayer()
@@ -28,7 +29,10 @@ class MainViewPresenter: ObservableObject, PlayerDelegate {
     }
 
     func setFrame(rect: CGRect) {
-        avPlayerLayer?.frame = rect
+        if avPlayerLayer?.frame != rect {
+            avPlayerLayer?.frame = rect
+            playerRenderViewHeight = rect.height
+        }
     }
 
     // MARK: - Player operation -
